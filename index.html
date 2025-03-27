@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartWay</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/thinking-icon-removebg.png" type="image/png">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">SmartWay: Enhanced Waypoint Prediction and Backtracking for Zero-Shot Vision-and-Language Navigation
+          </h1>
+          <!-- <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              Xiangyu Shi<sup>*</sup>,</span>
+            <span class="author-block">
+              Zerui Li<sup>*</sup>,</span>
+            <span class="author-block">
+              Wenqi Lyu,
+            </span>
+            <span class="author-block">
+              Jiatong Xia,
+            </span>
+            <span class="author-block">
+              Feras Dayoub,
+            </span>
+            <span class="author-block">
+              Yanyuan Qiao<sup>&#167</sup>,
+            </span>
+            <span class="author-block">
+              Qi Wu<sup>†</sup>
+            </span>
+          </div> -->
+          
+          <!-- Author Info. -->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/xiangyushi/" target="_blank">Xiangyu Shi</a><sup>*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="mailto:zerui.li@adelaide.edu.au" target="_blank">Zerui Li</a><sup>*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/wenqi-lyu-88938a29b/" target="_blank">Wenqi Lyu</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/jiatong-xia/" target="_blank">Jiatong Xia</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://ferasdayoub.com/" target="_blank">Feras Dayoub</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://yanyuanqiao.github.io/" target="_blank">Yanyuan Qiao</a><sup>&#167;</sup>,
+            </span>
+            <span class="author-block">
+              <a href="http://www.qi-wu.me/" target="_blank">Qi Wu</a><sup>†</sup>
+            </span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Australian Institute for Machine Learning, The University of Adelaide</span>
+          </div>
+          <div class="is-size-6 publication-notes">
+            <span>* Equal Contribution</span><br>
+            <span>&#167; Project Lead</span><br>
+            <span>† Corresponding Author</span>
+          </div>
+
+          <!-- submission Info. -->
+          <div class="is-size-6 has-text-centered">
+            <br>
+            <em>Under submission to IROS 2025</em>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2503.10069"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=pxU44Zw3WiE"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Vision-and-Language Navigation (VLN) in continuous environments requires agents to interpret natural language
+            instructions while navigating unconstrained 3D spaces. Existing
+            VLN-CE frameworks rely on a two-stage approach: a waypoint
+            predictor to generate waypoints and a navigator to execute
+            movements. However, current waypoint predictors struggle with
+            spatial awareness, while navigators lack historical reasoning
+            and backtracking capabilities, limiting adaptability.
+          </p>
+          <p>
+            We propose a zero-shot VLN-CE framework integrating an enhanced
+            waypoint predictor with a Multi-modal Large Language Model
+            (MLLM)-based navigator. Our predictor employs a stronger vision encoder, masked cross-attention fusion, and an occupancyaware loss for better waypoint quality. The navigator incorporates history-aware reasoning and adaptive path planning with
+            backtracking, improving robustness. Experiments on R2R-CE
+            and MP3D benchmarks show our method achieves state-of-theart (SOTA) performance in zero-shot settings, demonstrating
+            competitive results compared to fully supervised methods.
+           
+          </p>
+          <p>
+            We deploy our method on a TurtleBot 4 equipped with an OAK-D Pro camera, 
+            demonstrating its adaptability through real-world validation.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+
+
+    <section class="section">
+      <div class="container is-max-desktop content has-text-centered">
+        <h2 class="title">Method</h2>
+        Overview of our proposed framework.
+        <figure class="image is-inline-block">
+          <img src="static/images/smartway/method.png" alt="SmartWay Overview">
+        </figure>
+        <p> Our approach consists of two key components: an <strong>Occupancy-aware Waypoint Predictor</strong> and an <strong>MLLM-based Navigator</strong>. The waypoint predictor
+          refines waypoint selection by integrating a stronger vision encoder, a masked cross-attention fusion mechanism, and an occupancy-aware loss, improving
+          prediction quality. The MLLM-based Navigator processes candidate waypoints using visual and textual information to enhance navigation decisions,
+          incorporating finer turning options, historical context, and a backtracking strategy. The robot on this figure is our Turtlebot 4 mobile robot equipped with
+          an OAK-D Pro camera mounted at a height of 70 cm.</p>
+      </div>
+    </section>
+    
+
+<!-- Paper video. -->
+<div class="columns is-centered has-text-centered">
+  <div class="column is-four-fifths">
+    <h2 class="title is-3">Video</h2>
+    <div class="publication-video">
+      <video controls width="100%">
+        <source src="static/videos/smartway/final model 720p.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</div>
+<!--/ Paper video. -->
+
+
+<!-- Demo Videos Section -->
+<section class="section">
+  <div class="container">
+    <h2 class="title is-3 has-text-centered">Demo</h2>
+
+    <!-- Lab Demo Label -->
+    <h3 class="title is-5 has-text-centered">Lab Demonstrations</h3>
+
+    <!-- 第一排：左上 + 右上 -->
+    <div class="columns">
+      <div class="column">
+        <video controls width="100%">
+          <source src="static/videos/smartway/last_three_videos/topleft.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <p class="has-text-centered">Go forward, walk across the chairs, turn left and stop at the TV.</p>
+      </div>
+
+      <div class="column">
+        <video controls width="100%">
+          <source src="static/videos/smartway/last_three_videos/topright.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <p class="has-text-centered">Turn right and then walk to the red ladder.</p>
+      </div>
+    </div>
+
+    <!-- Simulator Demo Label -->
+    <h3 class="title is-5 has-text-centered">Simulator Demonstration</h3>
+
+    <!-- 第二排：下面 -->
+    <div class="columns is-centered">
+      <div class="column is-two-thirds">
+        <video controls width="100%">
+          <source src="static/videos/smartway/last_three_videos/bot.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <p class="has-text-centered">Navigate through the simulated environment and stop at the goal.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- Prompt Visualization Section -->
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-eight">
+        <h2 class="title is-3">Prompt Visualization</h2>
+        <figure class="image">
+          <img src="static/images/smartway/prompt.jpg" alt="Prompt Visualization">
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@misc{shi2025smartwayenhancedwaypointprediction,
+      title={SmartWay: Enhanced Waypoint Prediction and Backtracking for Zero-Shot Vision-and-Language Navigation}, 
+      author={Xiangyu Shi, Zerui Li, Wenqi Lyu, Jiatong Xia, Feras Dayoub, Yanyuan Qiao, and Qi Wu},
+      year={2025},
+      eprint={2503.10069},
+      archivePrefix={arXiv},
+      url={https://arxiv.org/abs/2503.10069}, 
+}</code></pre>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Acknowledgement</h2>
+    <p>
+      This website is adapted from 
+      <a href="https://github.com/nerfies/nerfies.github.io" target="_blank" rel="noopener noreferrer">Nerfies</a>, 
+      which is licensed under a 
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">
+        Creative Commons Attribution-ShareAlike 4.0 International License
+      </a>.
+    </p>
+  </div>
+</section>
+
+<!-- 
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html> -->
+
+
+<!-- 
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
+        free-viewpoint
+        portraits.
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/steve.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/chair-tp.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/shiba.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/fullbody.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-blueshirt">
+          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/blueshirt.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-mask">
+          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/mask.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-coffee">
+          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/coffee.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-toby">
+          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/toby2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
